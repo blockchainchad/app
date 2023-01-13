@@ -55,37 +55,37 @@ export const Spritesheet = ({
 
     useEffect(() => {
         debugger
-        setTimeout(() => {
-            const canvas = canvasRef.current;
-            debugger
-            if (canvas) {
-                if (emotionCanvases) {
-                    const ctx = canvas.getContext('2d');
-                    const imageBitmap = emotionCanvases[0];
-                    debugger
-                    ctx.drawImage(imageBitmap, 0, 0);
-                } else if (spritesheet) {
-                    const ctx = canvas.getContext('2d');
-                    const imageBitmap = spritesheet.result;
-                    // console.log('render image bitmap', imageBitmap, size, canvas.width, canvas.height);
-                    // ctx.drawImage(imageBitmap, 0, 0, size, size, 0, 0, canvas.width, canvas.height);
-        
-                    let frameIndex = 0;
-                    const _recurse = () => {
-                        const x = (frameIndex % numFramesPerRow) * frameSize;
-                        const y = size - frameSize - Math.floor(frameIndex / numFramesPerRow) * frameSize;
-                        frameIndex = (frameIndex + 1) % numFrames;
-        
-                        ctx.clearRect(0, 0, canvas.width, canvas.height);
-                        ctx.drawImage(imageBitmap, x, y, frameSize, frameSize, 0, 0, canvas.width, canvas.height);
-                    };
-                    const interval = setInterval(_recurse, frameTime);
-                    return () => {
-                        clearInterval(interval);
-                    };
-                }
+        // setTimeout(() => {
+        const canvas = canvasRef.current;
+        debugger
+        if (canvas) {
+            if (emotionCanvases) {
+                const ctx = canvas.getContext('2d');
+                const imageBitmap = emotionCanvases[0];
+                debugger
+                ctx.drawImage(imageBitmap, 0, 0);
+            } else if (spritesheet) {
+                const ctx = canvas.getContext('2d');
+                const imageBitmap = spritesheet.result;
+                // console.log('render image bitmap', imageBitmap, size, canvas.width, canvas.height);
+                // ctx.drawImage(imageBitmap, 0, 0, size, size, 0, 0, canvas.width, canvas.height);
+    
+                let frameIndex = 0;
+                const _recurse = () => {
+                    const x = (frameIndex % numFramesPerRow) * frameSize;
+                    const y = size - frameSize - Math.floor(frameIndex / numFramesPerRow) * frameSize;
+                    frameIndex = (frameIndex + 1) % numFrames;
+    
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    ctx.drawImage(imageBitmap, x, y, frameSize, frameSize, 0, 0, canvas.width, canvas.height);
+                };
+                const interval = setInterval(_recurse, frameTime);
+                return () => {
+                    clearInterval(interval);
+                };
             }
-        }, 3000);
+        }
+        // }, 3000);
     }, [canvasRef, spritesheet, emotionCanvases]);
 
     return (
