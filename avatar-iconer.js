@@ -51,7 +51,7 @@ class AvatarIconer extends EventTarget {
 
     this.getEmotionCanvases = (() => {
       return async function(args) {
-        debugger
+        // debugger
         const result = await offscreenEngineManager.request('getEmotionCanvases', args);
         /* args:
           Array(3)
@@ -170,7 +170,7 @@ class AvatarIconer extends EventTarget {
       
       if (emotionIndex !== -1) {
         const sourceCanvas = this.emotionCanvases[emotionIndex];
-        debugger
+        // debugger
         
         if (sourceCanvas) {
           for (const dstCanvas of this.canvases) {
