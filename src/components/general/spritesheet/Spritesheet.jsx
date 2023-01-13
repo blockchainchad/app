@@ -34,7 +34,6 @@ export const Spritesheet = ({
                         return;
                     }
                     setEmotionCanvases(emotionCanvases);
-                    debugger
                 } else {
                     const spritesheet = await spriteAnimationManager.getSpriteAnimationForAppUrlAsync(startUrl, {
                         size,
@@ -54,15 +53,11 @@ export const Spritesheet = ({
     }, [startUrl]);
 
     useEffect(() => {
-        debugger
-        // setTimeout(() => {
         const canvas = canvasRef.current;
-        debugger
         if (canvas) {
             if (emotionCanvases) {
                 const ctx = canvas.getContext('2d');
                 const imageBitmap = emotionCanvases[0];
-                debugger
                 ctx.drawImage(imageBitmap, 0, 0);
             } else if (spritesheet) {
                 const ctx = canvas.getContext('2d');
@@ -85,7 +80,6 @@ export const Spritesheet = ({
                 };
             }
         }
-        // }, 3000);
     }, [canvasRef, spritesheet, emotionCanvases]);
 
     return (
