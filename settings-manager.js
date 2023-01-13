@@ -23,9 +23,9 @@ class SettingsManager extends EventTarget {
   }
 
   getSettings() {
-    // const settingsString = localStorage.getItem('GfxSettings');
+    const settingsString = localStorage.getItem('GfxSettings');
     // const settingsString = '{"resolution":"HIGH","antialias":"NONE","viewRange":"HIGH","shadowQuality":"HIGH","postprocessing":{"enabled":"ON","depthOfField":"ON","hdr":"ON","bloom":"ON"},"character":{"details":"MEDIUM","hairPhysics":"ON"}}'
-    const settingsString = null
+    // const settingsString = null
     let settings;
 
     try {

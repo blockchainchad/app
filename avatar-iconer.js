@@ -51,8 +51,27 @@ class AvatarIconer extends EventTarget {
 
     this.getEmotionCanvases = (() => {
       return async function(args) {
+        debugger
         const result = await offscreenEngineManager.request('getEmotionCanvases', args);
+        /* args:
+          Array(3)
+          0: "/avatars/scilly_drophunter_v31.9_Guilty.vrm"
+          1: 150
+          2: 150
+        */
         return result;
+        /* result:
+          Array(9)
+          0: ImageBitmap {width: 150, height: 150}
+          1: ImageBitmap {width: 150, height: 150}
+          2: ImageBitmap {width: 150, height: 150}
+          3: ImageBitmap {width: 150, height: 150}
+          4: ImageBitmap {width: 150, height: 150}
+          5: ImageBitmap {width: 150, height: 150}
+          6: ImageBitmap {width: 150, height: 150}
+          7: ImageBitmap {width: 150, height: 150}
+          8: ImageBitmap {width: 150, height: 150}
+         */
       };
     })();
 
@@ -151,6 +170,7 @@ class AvatarIconer extends EventTarget {
       
       if (emotionIndex !== -1) {
         const sourceCanvas = this.emotionCanvases[emotionIndex];
+        debugger
         
         if (sourceCanvas) {
           for (const dstCanvas of this.canvases) {

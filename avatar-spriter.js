@@ -1855,6 +1855,7 @@ export const renderSpriteImages = async (arrayBuffer, srcUrl) => {
     const spriteSpec = spriteSpecs[i];
     const {name, duration} = spriteSpec;
 
+    debugger
     const canvas = document.createElement('canvas');
     canvas.width = size;
     canvas.height = size;

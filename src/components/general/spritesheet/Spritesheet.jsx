@@ -2,6 +2,7 @@ import React, {useEffect, useState, useRef} from 'react';
 import classnames from 'classnames';
 import styles from './spritesheet.module.css';
 import spriteAnimationManager from '../../../../sprite-animation-manager.js';
+import offscreenEngineManager from '../../../../offscreen-engine/offscreen-engine-manager';
 
 //
 
@@ -25,15 +26,20 @@ export const Spritesheet = ({
         if (startUrl) {
             let live = true;
             (async () => {
-                const spritesheet = await spriteAnimationManager.getSpriteAnimationForAppUrlAsync(startUrl, {
-                    size,
-                    numFrames,
-                });
+                // const spritesheet = await spriteAnimationManager.getSpriteAnimationForAppUrlAsync(startUrl, {
+                //     size,
+                //     numFrames,
+                // });
+                if (startUrl.includes('.vrm')) {
+                    debugger
+                    globalThis.srcCanvases = await offscreenEngineManager.request('getEmotionCanvases', [startUrl, 150, 150]);
+                    debugger
+                }
 
                 if (!live) {
                     return;
                 }
-                setSpritesheet(spritesheet);
+                // setSpritesheet(spritesheet);
             })();
             return () => {
               live = false;
@@ -42,27 +48,30 @@ export const Spritesheet = ({
     }, [startUrl]);
 
     useEffect(() => {
-        const canvas = canvasRef.current;
-        if (canvas && spritesheet) {
-            const ctx = canvas.getContext('2d');
-            const imageBitmap = spritesheet.result;
-            // console.log('render image bitmap', imageBitmap, size, canvas.width, canvas.height);
-            // ctx.drawImage(imageBitmap, 0, 0, size, size, 0, 0, canvas.width, canvas.height);
+        setTimeout(() => {
+            const canvas = canvasRef.current;
+            if (canvas && srcCanvases) {
+                const ctx = canvas.getContext('2d');
+                const imageBitmap = srcCanvases[0];
+                // console.log('render image bitmap', imageBitmap, size, canvas.width, canvas.height);
+                // ctx.drawImage(imageBitmap, 0, 0, size, size, 0, 0, canvas.width, canvas.height);
+                ctx.drawImage(imageBitmap, 0, 0);
 
-            let frameIndex = 0;
-            const _recurse = () => {
-                const x = (frameIndex % numFramesPerRow) * frameSize;
-                const y = size - frameSize - Math.floor(frameIndex / numFramesPerRow) * frameSize;
-                frameIndex = (frameIndex + 1) % numFrames;
+                // let frameIndex = 0;
+                // const _recurse = () => {
+                //     const x = (frameIndex % numFramesPerRow) * frameSize;
+                //     const y = size - frameSize - Math.floor(frameIndex / numFramesPerRow) * frameSize;
+                //     frameIndex = (frameIndex + 1) % numFrames;
 
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                ctx.drawImage(imageBitmap, x, y, frameSize, frameSize, 0, 0, canvas.width, canvas.height);
-            };
-            const interval = setInterval(_recurse, frameTime);
-            return () => {
-                clearInterval(interval);
-            };
-        }
+                //     ctx.clearRect(0, 0, canvas.width, canvas.height);
+                //     ctx.drawImage(imageBitmap, x, y, frameSize, frameSize, 0, 0, canvas.width, canvas.height);
+                // };
+                // const interval = setInterval(_recurse, frameTime);
+                // return () => {
+                //     clearInterval(interval);
+                // };
+            }
+        }, 5000);
     }, [canvasRef, spritesheet]);
 
     return (
