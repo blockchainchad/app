@@ -693,7 +693,7 @@ class Avatar {
 
     this.debugMesh = null;
 
-    const isVrmVersion0 = parseFloat(this.vrmExtension.specVersion.specVersion) < 1;
+    const isVrmVersion0 = parseFloat(this.vrmExtension.specVersion) < 1;
 
     this.faceposes = [];
     if (this.options.visemes) {

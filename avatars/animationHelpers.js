@@ -503,7 +503,7 @@ export function getFirstPersonCurves(vrmExtension) {
     );
   }
   if (vrmExtension) {
-    const isVrmVersion0 = parseFloat(vrmExtension.specVersion.specVersion) < 1;
+    const isVrmVersion0 = parseFloat(vrmExtension.specVersion) < 1;
     let lookAtHorizontalInner;
     let lookAtHorizontalOuter;
     let lookAtVerticalDown;
