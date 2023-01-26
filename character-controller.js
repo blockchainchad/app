@@ -1383,13 +1383,13 @@ class LocalPlayer extends UninterpolatedPlayer {
         this.glider.visible = false;
         sceneLowPriority.add(this.glider);
       }
-      if (this.glider) {
+      if (this.glider?.mainModel) {
         // note: Calc/set glider's main rotation.
         localEuler.order = 'YZX';
         localEuler.setFromQuaternion(this.quaternion);
         localEuler.y += Math.PI;
-        this.glider.rotation.copy(localEuler);
-        this.glider.rotation.x = 0;
+        this.glider.mainModel.rotation.copy(localEuler);
+        this.glider.mainModel.rotation.x = 0;
         // note: Dynamically calc/set glider's rotation.z by hands positions.
         this.avatar.foundModelBones.Left_wrist.matrixWorld.decompose(localVector, localQuaternion, localVector4);
         // this.avatar.foundModelBones.Left_middleFinger1.matrixWorld.decompose(localVector3, localQuaternion, localVector4);
@@ -1399,10 +1399,10 @@ class LocalPlayer extends UninterpolatedPlayer {
         // localVector2.add(localVector3).multiplyScalar(0.5);
         localVector.add(localVector2).multiplyScalar(0.5);
         localVector.y += 0.06; // note: because of some vrms such as meebit.vrm hasn't finger bones, so can't depend on finger's position, then have to hard-code this value to correct glider position.
-        this.glider.position.copy(localVector);
+        this.glider.mainModel.position.copy(localVector);
         //
-        localVector.set(0, 0, 0.032).applyEuler(this.glider.rotation);
-        this.glider.position.add(localVector);
+        localVector.set(0, 0, 0.032).applyEuler(this.glider.mainModel.rotation);
+        this.glider.mainModel.position.add(localVector);
         //
         this.avatar.foundModelBones.Left_wrist.matrixWorld.decompose(localVector, localQuaternion, localVector4);
         this.avatar.foundModelBones.Right_wrist.matrixWorld.decompose(localVector2, localQuaternion, localVector4);
@@ -1410,7 +1410,7 @@ class LocalPlayer extends UninterpolatedPlayer {
         localVector4.copy(localVector3).setY(0);
         let angle = localVector3.angleTo(localVector4);
         if (localVector3.y < 0) angle *= -1;
-        this.glider.rotation.z = angle;
+        this.glider.mainModel.rotation.z = angle;
         // note: Update glider's matrix.
         this.glider.updateMatrixWorld();
       }
