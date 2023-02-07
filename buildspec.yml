@@ -10,7 +10,7 @@ phases:
       - git submodule update
   pre_build:
     commands:
-      - REPOSITORY_URI=907263135169.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/ecrrepository-app-$AWS_DEFAULT_REGION
+      - REPOSITORY_URI=909695425273.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/ecrrepository-ws-app2-$AWS_DEFAULT_REGION
       - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
       - IMAGE_TAG=${COMMIT_HASH:=latest}
   build:
@@ -27,7 +27,7 @@ phases:
       - echo Pushing the Docker images...
       - echo Logging in to Amazon ECR...
       - aws --version
-      - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin 907263135169.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
+      - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin 909695425273.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
       - docker push $REPOSITORY_URI:latest
       - docker push $REPOSITORY_URI:$IMAGE_TAG
       - echo Writing image definitions file...
